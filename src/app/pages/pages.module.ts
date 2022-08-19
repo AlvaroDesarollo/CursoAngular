@@ -6,23 +6,30 @@ import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './progress/progress.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent
+    PagesComponent,
   ],
   exports: [
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
-    CommonModule, SharedModule, AppRoutingModule, RouterModule
-  ]
+    CommonModule,
+    SharedModule,
+    AppRoutingModule,
+    RouterModule,
+    FormsModule,
+    ComponentsModule,
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}

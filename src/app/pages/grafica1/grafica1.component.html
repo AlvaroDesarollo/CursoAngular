@@ -1,3 +1,36 @@
-<p>
-  grafica1 works!
-</p>
+<div class="row">
+  <div class="col-6">
+    <app-dona 
+            [title]="grafica1[0].title"
+            [labels]="grafica1[0].labels"
+            [data]="grafica1[0].data"
+            [colors]="grafica1[0].colors">
+    </app-dona>
+  </div>
+  <div class="col-6">
+    <app-dona 
+      [title]="grafica2[0].title"
+      [labels]="grafica2[0].labels"
+      [data]="grafica2[0].data">
+    </app-dona>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <app-dona 
+      [title]="grafica3[0].title"
+      [labels]="grafica3[0].labels"
+      [data]="grafica3[0].data"
+      [colors]="grafica3[0].colors">
+    </app-dona>
+  </div>
+  <div class="col-6">
+    <app-dona 
+      [title]="grafica4[0].title"
+      [labels]="grafica4[0].labels"
+      [data]="grafica4[0].data"
+      [colors]="grafica4[0].colors">
+    </app-dona>
+  </div>
+</div>
