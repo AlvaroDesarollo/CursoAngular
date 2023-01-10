@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
-//TODO: Mover a servicio de alertas
-import swal from 'sweetalert2';
 
 declare const google: any;
 @Component({
@@ -35,7 +33,8 @@ export class LoginComponent implements AfterViewInit {
     private router: Router,
     private fb: FormBuilder,
     private userService: UsuarioService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private alertService: AlertService
   ) {}
 
   ngAfterViewInit(): void {
@@ -63,11 +62,15 @@ export class LoginComponent implements AfterViewInit {
         console.log('Ok Google', rta);
         return this.ngZone.run(() => {
           this.router.navigateByUrl('/');
-        })
+        });
       },
       (err) => {
         console.error('Error en crear Usuario:', err.error);
-        swal.fire('Error', err.error.msg, 'error');
+        this.alertService.alertSimple({
+          title: 'Error',
+          msg: err.error.msg,
+          icon: 'error',
+        });
       }
     );
   }
@@ -86,7 +89,11 @@ export class LoginComponent implements AfterViewInit {
       },
       (err) => {
         console.error('Error en crear Usuario:', err.error);
-        swal.fire('Error', err.error.msg, 'error');
+        this.alertService.alertSimple({
+          title: 'Error',
+          msg: err.error.msg,
+          icon: 'error',
+        });
       }
     );
   }

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
-//TODO: Mover a servicio de alertas
-import swal from 'sweetalert2';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +27,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   crearUsuario() {
@@ -47,7 +46,11 @@ export class RegisterComponent implements OnInit {
       },
       (err) => {
         console.error('Error en crear Usuario:', err.error);
-        swal.fire('Error', err.error.msg, 'error');
+        this.alertService.alertSimple({
+          title: 'Error',
+          msg: err.error.msg,
+          icon: 'error',
+        });
       }
     );
   }

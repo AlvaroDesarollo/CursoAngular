@@ -24,7 +24,6 @@ export class PromesasComponent implements OnInit {
 
 
 
-    
     this.getUsuarios().then((res) => {
       console.log('termine:::', res);
     });
@@ -34,7 +33,7 @@ export class PromesasComponent implements OnInit {
     return new Promise((resolve, reject) => {
       fetch('https://reqres.in/api/users?page=2')
       .then((res) => res.json())
-      .then((users) => resolve(users.data))
+      .then((users) => resolve(users.data));
     });
   }
 

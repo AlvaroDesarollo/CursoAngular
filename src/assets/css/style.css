@@ -754,7 +754,7 @@ Main sidebar
 ******************/
 .left-sidebar {
   position: absolute;
-  width: 240px;
+  width: 270px;
   height: 100%;
   top: 0px;
   z-index: 20;
@@ -1000,7 +1000,7 @@ File: scss
   position: relative; }
 
 .container-fluid {
-  padding: 25px 25px; }
+  padding: 25px 35px; }
 
 .card {
   margin-bottom: 30px; }
@@ -1074,7 +1074,7 @@ File: scss
       padding: 7px 1.5rem; }
   .topbar ul.dropdown-user {
     padding: 0px;
-    min-width: 270px; }
+    min-width: 310px; }
     .topbar ul.dropdown-user li {
       list-style: none;
       padding: 0px;

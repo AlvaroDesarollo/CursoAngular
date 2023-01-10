@@ -6,6 +6,7 @@ import { IRegisterForm } from '../interfaces/register-form.interfaces';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
 
 declare const google: any;
 const base_url = environment.base_url;
@@ -13,11 +14,19 @@ const base_url = environment.base_url;
   providedIn: 'root',
 })
 export class UsuarioService {
+  public usuario: Usuario;
   constructor(
     private http: HttpClient,
     private router: Router,
     private ngZone: NgZone
   ) {}
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+  get uid(): string {
+    return this.usuario.uid || '';
+  }
   crearUsuario(formData: IRegisterForm) {
     return this.http.post(`${base_url}/usuarios`, formData).pipe(
       tap((res: any) => {
@@ -25,6 +34,16 @@ export class UsuarioService {
         sessionStorage.setItem('token', res.data.token);
       })
     );
+  }
+
+  actualizarUsuario(data: {email: string, nombre: string, rol?: string}) {
+    data = {
+      ...data,
+      rol: this.usuario.rol
+    };
+    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {        headers: {
+      'x-token': this.token,
+    }});
   }
 
   login(formData: ILoginForm) {
@@ -49,21 +68,26 @@ export class UsuarioService {
   }
 
   validarToken() {
-    const token = localStorage.getItem('token') || '';
-
     return this.http
       .get(`${base_url}/login/renew`, {
         headers: {
-          'x-token': token,
+          'x-token': this.token,
         },
       })
       .pipe(
-        tap((res: any) => {
+        map((res: any) => {
+
+          const {email, nombre, rol, uid, img} = res.data.usuario;
+          const isGoogle = res.data.usuario.google;
+          this.usuario = new Usuario(nombre, email, '', rol, isGoogle, img, uid);
           localStorage.setItem('token', res.data.tokenJWT);
           sessionStorage.setItem('token', res.data.tokenJWT);
+          return true;
         }),
-        map((rta) => true),
-        catchError((err: any) => of(false))
+        catchError((err: any) => {
+          console.error('Error login: ', err);
+          return of(false);
+        })
       );
   }
 
